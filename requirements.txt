@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+pydantic[email]
+ulid-py
+pydantic_settings
+python-dotenv
+pytest
+PyYAML
+pymongo[srv]==4.6.0
+motor
