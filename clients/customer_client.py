@@ -5,7 +5,7 @@ from models.order_model import Customer
 
 class CustomerClient:
     def __init__(self):
-        self.url = "http://localhost:6789/customer"
+        self.url = "http://localhost:6789/customers"
         self.logger = logging.getLogger(__name__)
 
     def get_customer_by_email(self, email: str):
