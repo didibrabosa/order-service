@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 import ulid
 from typing import List
 from datetime import datetime
 
 
 class Product(BaseModel):
-    id: str
+    id: str = Field(default_factory=lambda: str(ulid.new()))
     name: str
     description: str
     price: float
@@ -13,9 +13,9 @@ class Product(BaseModel):
 
 
 class Customer(BaseModel):
-    id: str
+    id: str = Field(default_factory=lambda: str(ulid.new()))
     name: str
-    email: str
+    email: EmailStr
 
 
 class Order(BaseModel):
@@ -32,9 +32,9 @@ class ProductRequest(BaseModel):
 
 
 class OrderRequest(BaseModel):
-    email: str
-    products: list[ProductRequest]
+    email: EmailStr
+    products: List[ProductRequest]
 
 
 class OrderResponse(BaseModel):
-    order_id: str = Field(default_factory=lambda: str(ulid.new()))
+    id: str = Field(default_factory=lambda: str(ulid.new()))
