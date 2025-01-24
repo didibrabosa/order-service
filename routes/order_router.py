@@ -27,6 +27,6 @@ def create_order(order: OrderRequest):
         logger.info("Creating order %s...", order)
         created_order = service.create_order(order)
         logger.info("Order created successfully: %s", created_order)
-        return created_order
+        return (created_order)
     except ValueError as ex:
         raise HTTPException(status_code=500, detail=f"Error to create order: {ex}")
