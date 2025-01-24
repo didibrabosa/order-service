@@ -1,5 +1,5 @@
 import logging
-from models.order_model import OrderRequest
+from models.order_model import Order, OrderRequest
 from clients.customer_client import CustomerClient
 from clients.product_client import ProductClient
 from storage.order_storage import OrderStorage
@@ -16,14 +16,16 @@ class OrderService:
         try:
             self.logger.info("Creating order for customer %s...", order.email)
             self.logger.debug(f"Order received: {order}")
-            customers = self.customer_client.get_customer_by_email(order.email)
-            self.logger.debug(f"Customer retrieved: {customers}")
+            customer = self.customer_client.get_customer_by_email(order.email)
+            self.logger.debug(f"Customer retrieved: {customer}")
             products = []
             for product in order.products:
-                product_data = self.product_client.get_product_by_name(product.name)
+                products_data = self.product_client.get_product_by_name(product.name)
                 products.append(product)
-                self.logger.debug(f"Product retrieved: {product_data}")
-            return self.storage.create_order(order)
+                self.logger.debug(f"Product retrieved: {products_data}")
+
+            order_model = Order(customer=customer, products=products)
+            return self.storage.create_order(order_model)
         except Exception as ex:
             self.logger.error(f"Error to create order: {ex}")
             raise
