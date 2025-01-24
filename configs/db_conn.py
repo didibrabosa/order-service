@@ -1,22 +1,21 @@
 """
 MongoDB database connection file
 """
-
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
 load_dotenv()
 
+MONGO_URL = os.getenv("MONGO_URL")
+MONGO_DB = os.getenv("MONGO_DB")
 
-def get_database_connection():
-    """
-    Establishes and returns a connection to the MongoDB database.
-    """
-    db_host = os.getenv("DATABASE_HOST", "localhost")
-    db_port = int(os.getenv("DATABASE_PORT", 27017))
-    db_name = os.getenv("DATABASE_NAME", "orders")
 
-    client = MongoClient(host=db_host, port=db_port)
+def get_database():
+    client = MongoClient(MONGO_URL)
+    db = client[MONGO_DB]
+    return db
 
-    return client[db_name]
+
+print(f"MONGO_URL: {MONGO_URL}")
+print(f"MONGO_DB: {MONGO_DB}")

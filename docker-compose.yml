@@ -11,10 +11,11 @@ services:
     depends_on:
       - order-database
     networks:
-      - orders_network
+      - app_network
     environment:
-      - MONGO_URI=mongodb://root:example@order-database:27017/
+      - MONGO_URL=mongodb://root:example@order-database:27017/
       - MONGO_DB=orders
+      - MONGO_LOG_LEVEL=info
 
   order-database:
     image: mongo:latest
@@ -23,9 +24,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27018:27017"
+      - "27017:27017"
     networks:
-      - orders_network
+      - app_network
     volumes:
       - mongo_data:/data/db
 
@@ -33,5 +34,5 @@ volumes:
   mongo_data:
 
 networks:
-  orders_network:
+  app_network:
     driver: bridge
