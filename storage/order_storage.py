@@ -14,6 +14,7 @@ class OrderStorage:
         self.logger.info("Creating a order by in DataBase")
         self.logger.debug(f"Order data: {order}")
         try:
+            self.logger.info(order)
             order_created = self.collection.insert_one(order.model_dump())
             self.logger.info("Order %s inserted Sucessufuly.", order_created.inserted_id)
             return str(order_created.inserted_id)

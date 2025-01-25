@@ -13,11 +13,7 @@ logger = logging.getLogger("__name__")
 order_storage = OrderStorage(db_connection=get_database())
 customer_client = CustomerClient()
 product_client = ProductClient()
-service = OrderService(
-    storage=order_storage,
-    customer=customer_client,
-    product=product_client
-)
+service = OrderService()
 
 
 @router.post("/v1/orders", response_model=OrderResponse)
@@ -27,6 +23,6 @@ def create_order(order: OrderRequest):
         logger.info("Creating order %s...", order)
         created_order = service.create_order(order)
         logger.info("Order created successfully: %s", created_order)
-        return (created_order)
+        return {"message": "Order created successfully", "order": created_order}
     except ValueError as ex:
         raise HTTPException(status_code=500, detail=f"Error to create order: {ex}")
