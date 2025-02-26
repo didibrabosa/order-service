@@ -22,7 +22,8 @@ class OrderService:
 
             products = []
             for product in order.products:
-                products_data = self.product_client.get_product_by_name(product.name)
+                products_data = self.product_client.get_product_by_name(
+                    product.name)
                 products.append(products_data)
                 self.logger.debug(f"Product retrieved: {products_data}")
 

@@ -1,5 +1,5 @@
-import httpx
 import logging
+import httpx
 from models.order_model import Product
 
 
@@ -16,7 +16,8 @@ class ProductClient:
             return Product(**product_info)
 
         except httpx.RequestError as ex:
-            self.logger.error(f"An error occurred while making the request: {str(ex)}")
+            self.logger.error(
+                f"An error occurred while making the request: {str(ex)}")
             raise
 
         except httpx.HTTPStatusError as ex:

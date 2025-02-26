@@ -10,3 +10,4 @@ PyYAML
 pymongo[srv]==4.6.0
 motor
 httpx
+pylint
