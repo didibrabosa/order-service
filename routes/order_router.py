@@ -32,7 +32,7 @@ def create_order(order: OrderRequest, service: ServiceDep) -> OrderResponse:
         created_order = service.create_order(order)
 
         logger.info("Order created successfully: %s", created_order)
-        return OrderResponse(created_order)
+        return OrderResponse(id=created_order)
 
     except httpx.HTTPStatusError as ex:
         logger.error("Error creating order: %s", ex)

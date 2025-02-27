@@ -23,14 +23,18 @@ async def lifespan(app: FastAPI):
     """
     db_connection = get_database()
     order_storage = OrderStorage(db_connection)
-    customer_client = CustomerClient(httpx)
-    product_client = ProductClient(httpx)
+
+    httpx_client = httpx.Client()
+
+    customer_client = CustomerClient(httpx_client)
+    product_client = ProductClient(httpx_client)
 
     order_service = OrderService(
         order_storage, customer_client, product_client
     )
 
     yield {"order_service": order_service}
+    httpx_client.close()
     logger.info("Shutdown Application")
 
 
