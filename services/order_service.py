@@ -1,16 +1,14 @@
 import logging
 from models.order_model import Order, OrderRequest
-from clients.customer_client import CustomerClient
-from clients.product_client import ProductClient
 from storage.order_storage import OrderStorage
 
 
 class OrderService:
-    def __init__(self):
+    def __init__(self, storage: OrderStorage, customer_client, product_client):
         self.logger = logging.getLogger(__name__)
-        self.storage = OrderStorage()
-        self.customer_client = CustomerClient()
-        self.product_client = ProductClient()
+        self.storage = storage
+        self.customer_client = customer_client
+        self.product_client = product_client
 
     def create_order(self, order: OrderRequest):
         try:
