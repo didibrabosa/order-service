@@ -4,14 +4,15 @@ from models.order_model import Product
 
 
 class ProductClient:
-    def __init__(self):
+    def __init__(self, httpx_client):
+        self.httpx_client = httpx_client
         self.url = "http://localhost:8001/products"
         self.logger = logging.getLogger(__name__)
 
     def get_product_by_name(self, name: str):
         path = f"{self.url}/name/{name}"
         try:
-            response = httpx.get(path)
+            response = self.httpx_client.get(path)
             product_info = response.json()
             return Product(**product_info)
 

@@ -4,14 +4,15 @@ from models.order_model import Customer
 
 
 class CustomerClient:
-    def __init__(self):
+    def __init__(self, httpx_client):
+        self.httpx_client = httpx_client
         self.url = "http://localhost:6789/customers"
         self.logger = logging.getLogger(__name__)
 
     def get_customer_by_email(self, email: str):
         path = f"{self.url}/email/{email}"
         try:
-            response = httpx.get(path)
+            response = self.httpx_client.get(path)
             customer_info = response.json()
             return Customer(**customer_info)
 
