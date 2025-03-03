@@ -22,7 +22,7 @@ def storage(db_conn):
     return OrderStorage(db_conn)
 
 
-def test_create_customer_success(storage, order, collection):
+def test_create_order_success(storage, order, collection):
     order_id = "01F8MECHZX3TBDSZ7XD96VR2H5"
     collection.insert_one.return_value.inserted_id = order_id
 
